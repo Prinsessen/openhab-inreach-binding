@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="inreach"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:thing="https://openhab.org/schemas/thing-description/v1.0.0"
+	xsi:schemaLocation="https://openhab.org/schemas/thing-description/v1.0.0 https://openhab.org/schemas/thing-description-1.0.0.xsd">
+
+	<!-- Garmin inReach Device -->
+	<thing-type id="device">
+		<label>Garmin inReach Device</label>
+		<description>Garmin inReach satellite communicator tracked via MapShare KML feed. Provides GPS position, speed,
+			elevation, course, and event data via Iridium satellite network.</description>
+
+		<channels>
+			<channel id="position" typeId="position"/>
+			<channel id="lastUpdate" typeId="last-update"/>
+			<channel id="speed" typeId="speed"/>
+			<channel id="course" typeId="course"/>
+			<channel id="elevation" typeId="elevation"/>
+			<channel id="event" typeId="event"/>
+			<channel id="gpsFix" typeId="gps-fix"/>
+			<channel id="emergency" typeId="emergency"/>
+			<channel id="text" typeId="text"/>
+			<channel id="trackingActive" typeId="tracking-active"/>
+			<channel id="distance" typeId="distance"/>
+		</channels>
+
+		<properties>
+			<property name="imei">IMEI</property>
+			<property name="deviceType">Device Type</property>
+			<property name="deviceName">Device Name</property>
+		</properties>
+
+		<config-description>
+			<parameter name="mapShareId" type="text" required="true">
+				<label>MapShare Identifier</label>
+				<description>The MapShare URL identifier (last segment of your MapShare URL, e.g., share.garmin.com/MyTracker)</description>
+			</parameter>
+			<parameter name="password" type="text">
+				<context>password</context>
+				<label>MapShare Password</label>
+				<description>MapShare access code / password (if feed is password-protected)</description>
+			</parameter>
+			<parameter name="refreshInterval" type="integer" unit="s" min="30">
+				<label>Refresh Interval</label>
+				<description>How often to poll the MapShare feed for new data (seconds). The inReach typically reports every 10
+					minutes, so polling more often than every 60 seconds provides little benefit.</description>
+				<default>120</default>
+			</parameter>
+			<parameter name="historyHours" type="integer" unit="h" min="1" max="720">
+				<label>History Window</label>
+				<description>How many hours of historical data to request from the feed. Larger windows return more data but take
+					longer to parse.</description>
+				<default>24</default>
+				<advanced>true</advanced>
+			</parameter>
+		</config-description>
+	</thing-type>
+
+	<!-- Channel Types -->
+	<channel-type id="position">
+		<item-type>Location</item-type>
+		<label>Position</label>
+		<description>Current GPS position (latitude, longitude, altitude)</description>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="last-update">
+		<item-type>DateTime</item-type>
+		<label>Last Update</label>
+		<description>Timestamp of the most recent tracking point</description>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="speed">
+		<item-type>Number:Speed</item-type>
+		<label>Speed</label>
+		<description>Current speed reported by the device</description>
+		<state readOnly="true" pattern="%.1f %unit%"/>
+	</channel-type>
+
+	<channel-type id="course">
+		<item-type>Number:Angle</item-type>
+		<label>Course</label>
+		<description>Direction of travel in degrees (0-360°, true north)</description>
+		<state readOnly="true" pattern="%.1f %unit%"/>
+	</channel-type>
+
+	<channel-type id="elevation">
+		<item-type>Number:Length</item-type>
+		<label>Elevation</label>
+		<description>Altitude above mean sea level</description>
+		<state readOnly="true" pattern="%.1f %unit%"/>
+	</channel-type>
+
+	<channel-type id="event">
+		<item-type>String</item-type>
+		<label>Event</label>
+		<description>Latest event type from the device (e.g., Tracking interval received, Tracking turned on/off, Location
+			received)</description>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="gps-fix">
+		<item-type>Switch</item-type>
+		<label>GPS Fix</label>
+		<description>Whether the device has a valid GPS fix</description>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="emergency">
+		<item-type>Switch</item-type>
+		<label>Emergency / SOS</label>
+		<description>Whether the device has an active SOS emergency</description>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="text">
+		<item-type>String</item-type>
+		<label>Text Message</label>
+		<description>Last text message sent from the device</description>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="tracking-active">
+		<item-type>Switch</item-type>
+		<label>Tracking Active</label>
+		<description>Whether the device is actively sending tracking data (derived from recent point age)</description>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="distance">
+		<item-type>Number:Length</item-type>
+		<label>Distance from Last</label>
+		<description>Distance traveled since previous tracking point</description>
+		<state readOnly="true" pattern="%.2f %unit%"/>
+	</channel-type>
+
+</thing:thing-descriptions>
