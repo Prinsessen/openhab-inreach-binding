@@ -274,3 +274,9 @@ No restart is required — openHAB hot-deploys addon JARs.
 ## License
 
 This binding is licensed under the [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/).
+
+## Credits
+
+**Nanna Agesen**
+- Email: Nanna@agesen.dk
+- GitHub: [@Prinsessen](https://github.com/Prinsessen)
