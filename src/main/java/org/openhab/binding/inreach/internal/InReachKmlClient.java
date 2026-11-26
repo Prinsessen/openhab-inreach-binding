@@ -37,8 +37,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jetty.client.ContentResponse;
 import org.eclipse.jetty.client.HttpClient;
-import org.eclipse.jetty.client.api.ContentResponse;
+import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.http.HttpMethod;
 import org.eclipse.jetty.http.HttpStatus;
 import org.slf4j.Logger;
@@ -93,7 +94,7 @@ public class InReachKmlClient {
     public boolean testConnection() {
         try {
             ContentResponse response = httpClient.newRequest(feedUrl).method(HttpMethod.GET)
-                    .header("Authorization", authHeader).timeout(15, TimeUnit.SECONDS).send();
+                    .headers(h -> h.put(HttpHeader.AUTHORIZATION, authHeader)).timeout(15, TimeUnit.SECONDS).send();
 
             if (response.getStatus() == HttpStatus.OK_200) {
                 String content = response.getContentAsString();
@@ -121,7 +122,7 @@ public class InReachKmlClient {
 
         try {
             ContentResponse response = httpClient.newRequest(url).method(HttpMethod.GET)
-                    .header("Authorization", authHeader).timeout(30, TimeUnit.SECONDS).send();
+                    .headers(h -> h.put(HttpHeader.AUTHORIZATION, authHeader)).timeout(30, TimeUnit.SECONDS).send();
 
             if (response.getStatus() == HttpStatus.UNAUTHORIZED_401) {
                 logger.warn("MapShare authentication failed (401). Check password.");
