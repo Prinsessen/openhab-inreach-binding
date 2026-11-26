@@ -20,6 +20,15 @@ It provides satellite-based GPS tracking that works everywhere, making it an exc
 |---------------|-------------|
 | `device` | A Garmin inReach device tracked via its MapShare KML feed |
 
+## Which version for which openHAB
+
+| openHAB | binding | branch |
+|---|---|---|
+| 5.3 and its snapshots/milestones | 2.0.x | `openhab-5.3` |
+| 5.0 - 5.2 | 1.0.x | `main` |
+
+openHAB 5.3 moved from Jetty 9 to Jetty 12; a binding built for one does not start on the other.
+
 ## Prerequisites
 
 Before using this binding, you must enable MapShare on your inReach device:

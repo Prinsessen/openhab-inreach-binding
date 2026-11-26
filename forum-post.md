@@ -85,6 +85,11 @@ The binding polls the Garmin MapShare KML feed at your configured interval. MapS
 
 ## Changelog
 
+### Version 2.0.0-beta.1 (for openHAB 5.3)
+- openHAB 5.3 moved to Jetty 12, and 1.0.0 does not start there; the MapShare client uses the Jetty 12 client API
+- Same features as 1.0.0; a new test runs the MapShare client against a local server and passes on both
+- Not yet run on a live openHAB 5.3 - reports welcome
+
 ### Version 1.0.0
 - Initial release
 - 11 channels: position, speed, course, elevation, events, SOS, messages, tracking state, distance
@@ -97,6 +102,8 @@ The binding polls the Garmin MapShare KML feed at your configured interval. MapS
 ## Resources
 
 [Download JAR](https://github.com/Prinsessen/openhab-inreach-binding/releases/download/v1.0.0/org.openhab.binding.inreach-5.2.0-SNAPSHOT.jar)
+
+[Download JAR for openHAB 5.3 (beta)](https://github.com/Prinsessen/openhab-inreach-binding/releases/download/v2.0.0-beta.1/org.openhab.binding.inreach-2.0.0-beta.1.jar)
 
 [Source Code](https://github.com/Prinsessen/openhab-inreach-binding)
 
