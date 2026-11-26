@@ -72,8 +72,13 @@ public class InReachKmlClient {
      * @param password MapShare access code (empty string for no password)
      */
     public InReachKmlClient(HttpClient httpClient, String mapShareId, String password) {
+        this(httpClient, MAPSHARE_BASE_URL, mapShareId, password);
+    }
+
+    /** With another base URL than Garmin's: for the tests, which run the HTTP calls against a local server. */
+    InReachKmlClient(HttpClient httpClient, String baseUrl, String mapShareId, String password) {
         this.httpClient = httpClient;
-        this.feedUrl = MAPSHARE_BASE_URL + mapShareId;
+        this.feedUrl = baseUrl + mapShareId;
 
         // MapShare uses HTTP Basic Auth — username can be anything, password is the access code
         String credentials = mapShareId + ":" + password;
